@@ -1,23 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import { useNavigate , Navigate} from "react-router-dom";
+import { Routes , Route } from "react-router-dom";
+
+import Titel from "./header/TitelHeader";
+import Contacts from "./main/Contact/Contacts";
+import Create from "./main/Contact/Create";
+import Edit from "./main/Contact/Edit";
+import View from "./main/Contact/View";
+import Time from "./main/Time";
+
 
 function App() {
+
+
+
+  
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Titel />
+      <Time/>
+      <Routes>
+        <Route path="/" element={<Navigate to="/contacts" />} />
+        <Route path="/contacts" element={<Contacts />} />
+        <Route path="/contacts/create" element={<Create/>} />
+        <Route path="/contacts/:contactID" element={<View />} />
+        <Route path="/contacts/edit/:contactID" element={<Edit />} />
+        </Routes>
     </div>
   );
 }
