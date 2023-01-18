@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./assets/bootstrap/bootstrap.scss";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

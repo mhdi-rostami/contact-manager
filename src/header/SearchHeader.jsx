@@ -1,17 +1,43 @@
 import styled from "styled-components"
-import {FaSearch} from "react-icons/fa"
+import { FaSearch } from "react-icons/fa"
+import { useState } from "react"
 
-const Searchheader = () => {
-    return(
-        <Col className="col-4 text-start">
-            <Input>   
-                       <Icon >
-                               <Iconsearch/>
-                         </Icon>
-                                       <Search type="search"  placeholder="جستجو مخاطب ..." />
-            </Input>
-        
-        </Col>
+const Searchheader = ({ getContacts, setFilteredContacts }) => {
+
+    const [query, setquery] = useState({ text: "" })
+
+    const searchContacts = (event) => {
+        setquery({
+            ...query, text: event.target.value
+        })
+        const allContacts = getContacts.filter((contact) => {
+            return contact.fullname.toLowerCase().includes(event.target.value.toLowerCase())
+        })
+
+        setFilteredContacts(allContacts);
+
+    }
+
+    return (
+
+        <div className="input-group w-0 col-4 d-flex" dir="ltr">
+            <span
+                className="input-group-text"
+                id="basic-addon1"
+            >
+                <Iconsearch />
+            </span>
+            <input
+                dir="rtl"
+                type="text"
+                value={query.text}
+                onChange={searchContacts}
+                className="form-control"
+                placeholder="جستجوی مخاطب"
+                aria-label="Search"
+                aria-describedby="basic-addon1"
+            />
+        </div>
     )
 }
 
@@ -22,28 +48,7 @@ export default Searchheader
 
 //style
 
- const Iconsearch = styled(FaSearch)`
-    width: 30px;
-    color: #756f6f;
-    margin-top: 13px;
-    font-size: 20px;
-    margin-left: 5px;
+const Iconsearch = styled(FaSearch)`
+ font-size: 20px;
  `
 
- const Input = styled.div`
-    position: relative;
- ` 
- const Icon = styled.div`
-    position: absolute;
- `
-
-const Col = styled.div`
-    direction: ltr;
-`
-const Search = styled.input`
-    direction: rtl;
-    background-color: #e3e6e9;
-    padding: 10px;
-    border: none;
-    border-radius: 20px;
-`

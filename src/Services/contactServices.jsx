@@ -12,7 +12,7 @@ export const getContact = (contactID) => {
     return axios.get(url);
 }
 
-export const getAllGroup = () => {
+export const getAllGroups = () => {
     const url = `${SERVER_URL}/groups`;
     return axios.get(url);
 }

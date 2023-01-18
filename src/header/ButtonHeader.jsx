@@ -41,4 +41,4 @@ const StyledLink = styled(Link)`
     color: white;
 
     }
-`;
+`

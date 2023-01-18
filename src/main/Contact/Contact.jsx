@@ -1,11 +1,12 @@
 import { IoEye, IoPencil, IoTrash } from "react-icons/io5";
 import { Link } from "react-router-dom";
 
-const Contact = ({ contact }) => {
+
+const Contact = ({ contact, confirmDelete }) => {
     return (
         <>
 
-            <div className="col-md-6 m-10s">
+            <div className="col-md-6 mb-15">
                 <div className="card">
                     <div className="card-body">
                         <div className="row align-items-center">
@@ -36,7 +37,7 @@ const Contact = ({ contact }) => {
 
                             <div className="col-sm-1 d-flex flex-column align-items-center justify-content-between">
                                 <button className="my-10 bg-info border-0 fs-5 rounded-2">
-                                    <Link to="/contacts/:contactID">
+                                    <Link to={`/contacts/${contact.id}`}>
                                         <IoEye>
 
                                         </IoEye>
@@ -44,11 +45,14 @@ const Contact = ({ contact }) => {
 
                                 </button>
                                 <button className="my-10 bg-warning border-0 fs-5 rounded-2">
-                                    <IoPencil>
+                                    <Link to={`/contacts/edit/${contact.id}`}>
+                                        <IoPencil>
 
-                                    </IoPencil>
+                                        </IoPencil>
+                                    </Link>
+
                                 </button>
-                                <button className="my-10 bg-danger border-0 fs-5 rounded-2">
+                                <button onClick={confirmDelete} className="my-10 bg-danger border-0 fs-5 rounded-2">
                                     <IoTrash>
 
                                     </IoTrash>
@@ -66,3 +70,4 @@ const Contact = ({ contact }) => {
 }
 
 export default Contact
+

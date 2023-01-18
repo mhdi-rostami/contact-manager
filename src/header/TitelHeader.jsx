@@ -1,10 +1,12 @@
 import Searchheader from "./SearchHeader"
 import Btn from "./ButtonHeader"
 import styled from "styled-components"
+import { useLocation } from "react-router-dom"
 
 
 
-const Titel = () => {
+const Titel = ({ getContacts, setFilteredContacts }) => {
+  const location = useLocation();
   return (
     <>
       <div className="container shadow ">
@@ -13,8 +15,13 @@ const Titel = () => {
           <Btn />
           <div className="col-4 text-center">
             <h2 className="text-white text-md-end text-lg-center">مدیریت مخاطبین</h2>
+
           </div>
-          <Searchheader />
+          {
+            location.pathname == "/contacts" ? (
+              <Searchheader getContacts={getContacts} setFilteredContacts={setFilteredContacts} />
+            ) : null
+          }
         </Row>
 
 

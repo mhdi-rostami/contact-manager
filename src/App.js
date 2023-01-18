@@ -1,4 +1,5 @@
-import { useNavigate , Navigate} from "react-router-dom";
+import { useState } from "react";
+import { useNavigate, Navigate } from "react-router-dom";
 import { Routes , Route } from "react-router-dom";
 
 import Titel from "./header/TitelHeader";
@@ -12,19 +13,33 @@ import Time from "./main/Time";
 function App() {
 
 
-
+    const [getContacts, setContacts] = useState([])
+    const [loading, setLoading] = useState(false)
+    const [getGroups, setGroups] = useState([]);
+    const [getFilteredContacts, setFilteredContacts] = useState([])
   
-
+ 
   return (
     <div className="App">
-      <Titel />
+      <Titel  getContacts={getContacts} setFilteredContacts={ setFilteredContacts} />
       <Time/>
       <Routes>
         <Route path="/" element={<Navigate to="/contacts" />} />
-        <Route path="/contacts" element={<Contacts />} />
-        <Route path="/contacts/create" element={<Create/>} />
-        <Route path="/contacts/:contactID" element={<View />} />
-        <Route path="/contacts/edit/:contactID" element={<Edit />} />
+
+        <Route path="/contacts" element={<Contacts
+          loading={loading}
+          setContacts={setContacts}
+          setGroups={setGroups}
+          setLoading={setLoading}
+          getFilteredContacts={getFilteredContacts}
+          setFilteredContacts={setFilteredContacts}
+        />} />
+
+        <Route path="/contacts/create" element={<Create loading={loading} groups={getGroups } />} />
+        
+        <Route path="/contacts/:contactID" element={<View setLoading={setLoading} loading={loading} />} />
+        
+        <Route path="/contacts/edit/:contactID" element={<Edit loading={loading} groups={getGroups } setLoading={setLoading}/>} />
         </Routes>
     </div>
   );
