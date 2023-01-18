@@ -78,7 +78,8 @@ const Contacts = ({ loading, getContacts, getGroups, setContacts, setGroups, set
             const response = await deleteContact(contactId);
             if (response) {
                 const { data: contactsData } = await getAllContacts();
-                setContacts(contactsData);
+                setFilteredContacts(contactsData);
+                setContacts(contactsData)
                 setLoading(false);
             }
         } catch (err) {
