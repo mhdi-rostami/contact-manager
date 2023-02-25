@@ -20,7 +20,7 @@ const Searchheader = ({ getContacts, setFilteredContacts }) => {
 
     return (
 
-        <div className="input-group w-0 col-4 d-flex" dir="ltr">
+        <div className="input-group w-25 col-4 d-flex" dir="ltr">
             <span
                 className="input-group-text"
                 id="basic-addon1"
