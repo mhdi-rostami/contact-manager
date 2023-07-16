@@ -16,7 +16,7 @@ function App() {
     const [getContacts, setContacts] = useState([])
     const [loading, setLoading] = useState(false)
     const [getGroups, setGroups] = useState([]);
-    const [getFilteredContacts, setFilteredContacts] = useState([])
+  const [getFilteredContacts, setFilteredContacts] = useState([])
   
  
   return (

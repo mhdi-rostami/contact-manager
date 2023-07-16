@@ -2,20 +2,25 @@ import styled from "styled-components"
 import { FaSearch } from "react-icons/fa"
 import { useState } from "react"
 
+var time = undefined;
+
 const Searchheader = ({ getContacts, setFilteredContacts }) => {
 
     const [query, setquery] = useState({ text: "" })
 
+
     const searchContacts = (event) => {
+        // console.log(time);
         setquery({
             ...query, text: event.target.value
         })
-        const allContacts = getContacts.filter((contact) => {
-            return contact.fullname.toLowerCase().includes(event.target.value.toLowerCase())
-        })
+        clearTimeout(time);
+        time = setTimeout(() => {
 
-        setFilteredContacts(allContacts);
-
+            setFilteredContacts(getContacts.filter((contact) => {
+                return contact.fullname.toLowerCase().includes(event.target.value.toLowerCase())
+            }))
+        }, 1000)
     }
 
     return (

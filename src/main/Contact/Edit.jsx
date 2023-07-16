@@ -4,6 +4,8 @@ import styled from "styled-components";
 import { getContact, updateContact } from '../../Services/contactServices';
 import Spinner from "../Spinner";
 import CreateIMG from "./CreateIMG";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import contactSchema from '../validations/FormValidation';
 
 const Edit = ({ loading, groups, setLoading }) => {
 
@@ -44,20 +46,13 @@ const Edit = ({ loading, groups, setLoading }) => {
     }, [])
 
 
-    const setEditContactInfo = (e) => {
-        setEditContact((prevState) => {
-            return {
-                ...prevState,
-                [e.target.name]: e.target.value,
-            }
-        })
-    }
 
-    const submitForm = async (event) => {
-        event.preventDefault();
+
+    const submitForm = async (values) => {
+        // event.preventDefault();
         try {
             setLoading(true)
-            const data = await updateContact(editContact, contactID);
+            const data = await updateContact(values, contactID);
 
             setLoading(false)
             if (data) {
@@ -82,40 +77,73 @@ const Edit = ({ loading, groups, setLoading }) => {
                         <H2 className='text-center text-info'>ویرایش مخاطب</H2>
                         <div className="row mt-50 mb-50 bg-dark align-items-center mx-auto w-75 rounded">
                             <div className="col-md-8  rounded-5 py-10">
-                                <form onSubmit={submitForm}>
-                                    <div >
-                                        <input type="text" name='fullname' onChange={setEditContactInfo} value={editContact.fullname} className="form-control mb-10" placeholder='نام و نام خانوادگی' required={true} />
-
-                                        <input type="text" name='photo' onChange={setEditContactInfo} value={editContact.photo} className="form-control mb-10" placeholder="آدرس تصویر" required={true} />
-
-                                        <input type="number" name='mobaile' onChange={setEditContactInfo} value={editContact.mobaile} className="form-control mb-10" placeholder='شماره موبایل' required={true} />
-
-                                        <input type="email" name='email' onChange={setEditContactInfo} value={editContact.email} className="form-control mb-10" placeholder=" آدرس ایمیل" required={true} />
-
-                                        <input type="text" name='job' onChange={setEditContactInfo} value={editContact.job} className="form-control mb-10" placeholder='شغل' required={true} />
-
-                                        <select className="form-select form-control mb-10" onChange={setEditContactInfo} value={editContact.group} name='group' required={true}>
-                                            <option value="" >انتخاب گروه</option>
-                                            {/* To ensure that the groups is a array of objects use groups.length  */}
-                                            {groups.length > 0 &&
-                                                groups.map(
-                                                    (group) => (
-                                                        <option key={group.id} value={group.id}>
-                                                            {group.name}
-                                                        </option>
+                                <Formik
+                                    initialValues={{
+                                        fullname: editContact.fullname,
+                                        photo: editContact.photo,
+                                        mobaile: editContact.mobaile,
+                                        email: editContact.email,
+                                        job: editContact.job,
+                                        group: editContact.group
+                                    }}
+                                    validationSchema={contactSchema}
+                                    onSubmit={(values) => {
+                                        submitForm(values);
+                                    }}
+                                >
+                                    <Form>
+                                        <div className=" mb-30">
+                                            <label className="mt-15 text-white"> نام و نام خانوادگی</label>
+                                            <Field type="text" name='fullname' className="form-control" />
+                                            <ErrorMessage name='fullname' render={msg => <div className='text-danger'>
+                                                {msg}
+                                            </div>} />
+                                            <label className="mt-15 text-white" > آدرس تصویر </label>
+                                            <Field type="text" name='photo' className="form-control" />
+                                            <ErrorMessage name='photo' render={msg => <div className='text-danger'>
+                                                {msg}
+                                            </div>} />
+                                            <label className="mt-15 text-white"> شماره موبایل</label>
+                                            <Field type="number" name='mobaile' className="form-control" />
+                                            <ErrorMessage name='mobaile' render={msg => <div className='text-danger'>
+                                                {msg}
+                                            </div>} />
+                                            <label className="mt-15 text-white">آدرس ایمیل </label>
+                                            <Field type="email" name='email' className="form-control" />
+                                            <ErrorMessage name='email' render={msg => <div className='text-danger'>
+                                                {msg}
+                                            </div>} />
+                                            <label className="mt-15 text-white"> شغل</label>
+                                            <Field type="text" name='job' className="form-control" />
+                                            <ErrorMessage name='job' render={msg => <div className='text-danger'>
+                                                {msg}
+                                            </div>} />
+                                            <label className="mt-15 text-white"> انتخاب گروه</label>
+                                            <Field as="select" className="form-select form-control" name='group'  >
+                                                <option value="" >انتخاب گروه</option>
+                                                {/* To ensure that the groups is a array of objects use groups.length  */}
+                                                {groups.length > 0 &&
+                                                    groups.map(
+                                                        (group) => (
+                                                            <option key={group.id} value={group.id}>
+                                                                {group.name}
+                                                            </option>
+                                                        )
                                                     )
-                                                )
-                                            }
-                                        </select>
-
-                                    </div>
-                                    <div className='text-center'>
-                                        <input type="submit" className='btn bg-white py-10 px-15 rounded-5 ms-15' value="ویرایش مخاطب" />
-                                        <Link to="/contacts" className="bg-white btn py-10 px-15 rounded-5" >
-                                            انصراف
-                                        </Link>
-                                    </div>
-                                </form>
+                                                }
+                                            </Field>
+                                            <ErrorMessage name='group' render={msg => <div className='text-danger'>
+                                                {msg}
+                                            </div>} />
+                                        </div>
+                                        <div className='text-center'>
+                                            <input type="submit" className='btn bg-white py-10 px-15 rounded-5 ms-15' value="ایجاد مخاطب" />
+                                            <Link to="/contacts" className="bg-white btn py-10 px-15 rounded-5" >
+                                                انصراف
+                                            </Link>
+                                        </div>
+                                    </Form>
+                                </Formik>
                             </div>
                             <div className='col-md-4 d-flex justify-content-sm-center mb-sm-10'>
                                 <img src={editContact.photo} className='img-fluid rounded ' alt={editContact.fullname} />
