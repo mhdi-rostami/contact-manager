@@ -4,6 +4,8 @@ import { useEffect } from "react";
 import Contact from './Contact';
 import NotFound from "../NotFound";
 import Spinner from "../Spinner";
+import { toast } from 'react-toastify';
+
 
 
 import { getAllContacts, getAllGroups, deleteContact } from './../../Services/contactServices';
@@ -81,6 +83,7 @@ const Contacts = ({ loading, getContacts, getGroups, setContacts, setGroups, set
                 setFilteredContacts(contactsData);
                 setContacts(contactsData)
                 setLoading(false);
+                toast.error("مخاطب با موفقیت حذف شد!")
             }
         } catch (err) {
             console.log(err.message);

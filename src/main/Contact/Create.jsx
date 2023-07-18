@@ -1,4 +1,3 @@
-import { useState } from 'react';
 
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -8,42 +7,44 @@ import CreateIMG from './CreateIMG';
 import { useNavigate } from 'react-router-dom';
 import contactSchema from '../validations/FormValidation';
 import { ErrorMessage, Field, Form, Formik } from "formik";
+import { toast } from 'react-toastify';
 
 const Create = ({ loading, groups }) => {
 
-  const [getContact, setContact] = useState({
-    fullname: "",
-    photo: "",
-    mobaile: "",
-    email: "",
-    job: "",
-    group: ""
-  })
+  // const [getContact, setContact] = useState({
+  //   fullname: "",
+  //   photo: "",
+  //   mobaile: "",
+  //   email: "",
+  //   job: "",
+  //   group: ""
+  // })
 
   const Navigate = useNavigate()
 
 
-  const setContactInfo = (e) => {
-    // setContact({
-    //   ...getContact,
-    //   [event.target.name]: event.target.value,
-    // })
+  // const setContactInfo = (e) => {
+  //   // setContact({
+  //   //   ...getContact,
+  //   //   [event.target.name]: event.target.value,
+  //   // })
 
-    setContact((prevState) => {
-      return {
-        ...prevState,
-        [e.target.name]: e.target.value,
-      }
-    })
-  }
+  //   setContact((prevState) => {
+  //     return {
+  //       ...prevState,
+  //       [e.target.name]: e.target.value,
+  //     }
+  //   })
+  // }
 
   const createContactForm = async (values) => {
     // event.preventDefault();
     try {
       const { status } = await creatContact(values);
       if (status === 201) {
-        setContact({})
+        // setContact({})
         Navigate("/contacts")
+        toast.success("مخاطب با موفقیت ساخته شد.")
       }
     }
     catch (err) {

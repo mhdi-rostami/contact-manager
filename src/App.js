@@ -8,6 +8,7 @@ import Create from "./main/Contact/Create";
 import Edit from "./main/Contact/Edit";
 import View from "./main/Contact/View";
 import Time from "./main/Time";
+import {ToastContainer} from "react-toastify"
 
 
 function App() {
@@ -22,7 +23,8 @@ function App() {
   return (
     <div className="App">
       <Titel  getContacts={getContacts} setFilteredContacts={ setFilteredContacts} />
-      <Time/>
+      <Time />
+      <ToastContainer rtl={ true} theme="colored" />
       <Routes>
         <Route path="/" element={<Navigate to="/contacts" />} />
 

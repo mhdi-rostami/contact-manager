@@ -5,6 +5,7 @@ import { getContact, updateContact } from '../../Services/contactServices';
 import Spinner from "../Spinner";
 import CreateIMG from "./CreateIMG";
 import { ErrorMessage, Field, Form, Formik } from "formik";
+import { toast } from 'react-toastify';
 import contactSchema from '../validations/FormValidation';
 
 const Edit = ({ loading, groups, setLoading }) => {
@@ -57,6 +58,7 @@ const Edit = ({ loading, groups, setLoading }) => {
             setLoading(false)
             if (data) {
                 Navigate("/contacts");
+                toast.info("مخاطب با موفقیت ویرایش شد !")
             }
         } catch (err) {
             console.log(err);
@@ -137,7 +139,7 @@ const Edit = ({ loading, groups, setLoading }) => {
                                             </div>} />
                                         </div>
                                         <div className='text-center'>
-                                            <input type="submit" className='btn bg-white py-10 px-15 rounded-5 ms-15' value="ایجاد مخاطب" />
+                                            <input type="submit" className='btn bg-white py-10 px-15 rounded-5 ms-15' value="ویرایش مخاطب" />
                                             <Link to="/contacts" className="bg-white btn py-10 px-15 rounded-5" >
                                                 انصراف
                                             </Link>
